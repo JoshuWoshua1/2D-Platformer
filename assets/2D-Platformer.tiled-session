@@ -1,0 +1,31 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "Level.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "Level.tmx": {
+            "scale": 0.2718055555555555,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 721.1037301992847,
+                "y": 719.2641798671436
+            }
+        }
+    },
+    "map.height": 80,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 18,
+    "map.tileWidth": 18,
+    "map.width": 80,
+    "openFiles": [
+        "Level.tmx"
+    ],
+    "project": "2D-Platformer.tiled-project",
+    "recentFiles": [
+        "Level.tmx"
+    ]
+}
