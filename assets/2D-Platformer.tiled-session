@@ -7,6 +7,9 @@
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
         "Level.tmx": {
             "scale": 0.2718055555555555,
             "selectedLayer": 0,
@@ -16,7 +19,11 @@
             }
         }
     },
+    "frame.defaultDuration": 300,
+    "last.exportedFilePath": "C:/Users/kimjo/OneDrive/Documents/GitHub/2D-Platformer/assets",
+    "last.imagePath": "C:/Users/kimjo/OneDrive/Documents/GitHub/2D-Platformer/assets",
     "map.height": 80,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 18,
     "map.tileWidth": 18,
@@ -25,7 +32,13 @@
         "Level.tmx"
     ],
     "project": "2D-Platformer.tiled-project",
+    "property.type": "bool",
     "recentFiles": [
         "Level.tmx"
-    ]
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 18,
+        "width": 18
+    }
 }
