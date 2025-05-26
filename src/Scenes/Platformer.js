@@ -225,11 +225,6 @@ class Platformer extends Phaser.Scene {
         cursors = this.input.keyboard.createCursorKeys();
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.rKey = this.input.keyboard.addKey('R');
-        // debug key listener (assigned to D key)
-        this.input.keyboard.on('keydown-D', () => {
-            this.physics.world.drawDebug = this.physics.world.drawDebug ? false : true
-            this.physics.world.debugGraphic.clear()
-        }, this);
 
         my.vfx.walking = this.add.particles(0, 5, "kenny-particles", {
             frame: ['smoke_01.png', 'smoke_02.png', 'smoke_03.png'],
