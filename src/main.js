@@ -22,7 +22,6 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: true,
             gravity: {
                 x: 0,
                 y: 0
@@ -31,9 +30,10 @@ let config = {
     },
     width: 1440,
     height: 900,
-    scene: [Load, Platformer]
+    scene: [Load, Platformer, Intro, Win]
 }
 
+var coins = 0;
 var cursors;
 const SCALE = 2.0;
 var my = {sprite: {}, text: {}, vfx: {}};

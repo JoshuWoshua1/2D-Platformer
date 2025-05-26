@@ -1,5 +1,5 @@
-**Platform Improvement**
+**2D Platformer**
+By Joshua Kim-Pearson
+CMPM 120
 
-Starter code for creating a platformer game using Arcade Phsyics in Phaser.
-
-Visual assets courtesy of [Kenny Assets](https://kenney.nl/assets), with gratitude.
+Assets from Kenny https://kenney.nl/assets.

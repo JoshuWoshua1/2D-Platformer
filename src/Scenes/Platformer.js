@@ -29,6 +29,14 @@ class Platformer extends Phaser.Scene {
 
         this.jumpCount = 0;
         this.MAX_JUMPS = 200;  // 1 by default ONLY 2 FOR DEBUG <---------------------------------------------**************
+
+        this.DiamondCount = 0; // need all of them to win
+
+        this.coinCount = 0;
+    }
+
+    preload() {
+        this.load.scenePlugin('AnimatedTiles', './lib/AnimatedTiles.js', 'animatedTiles', 'animatedTiles');
     }
 
     create() {
@@ -51,6 +59,8 @@ class Platformer extends Phaser.Scene {
         this.industrial_tileset = this.map.addTilesetImage("Industrial Tiles", "industrial_tilemap_tiles");
 
         // tilemap layers
+        this.backbackgroundLayer = this.map.createLayer("BackBackground", [this.tileset, this.food_tileset, this.industrial_tileset], 0, 0);
+        this.paralaxLayer = this.map.createLayer("Paralax", [this.tileset, this.food_tileset, this.industrial_tileset], 0, 0);
         this.wallsLayer = this.map.createLayer("Walls", [this.tileset, this.food_tileset, this.industrial_tileset], 0, 0);
         this.darkOverlay = this.add.rectangle(
             0, 0,
@@ -61,6 +71,8 @@ class Platformer extends Phaser.Scene {
         ).setOrigin(0, 0);
         this.backgroundLayer = this.map.createLayer("Background", [this.tileset, this.food_tileset, this.industrial_tileset], 0, 0);
         this.groundLayer = this.map.createLayer("Ground", [this.tileset, this.food_tileset, this.industrial_tileset], 0, 0);
+        this.animatedTiles.init(this.map);
+        this.paralaxLayer.setScrollFactor(0.5, 0.5);
 
         // get locked tiles ready
         this.lockedTiles = []; 
@@ -107,6 +119,16 @@ class Platformer extends Phaser.Scene {
             key: "tilemap_sheet",
             frame: 27
         });
+        
+        //animations for objects
+        this.anims.create({
+            key: 'coinAnim', // Animation key
+            frames: this.anims.generateFrameNumbers('tilemap_sheet', 
+                {start: 151, end: 152}
+            ),
+            frameRate: 3,  // Higher is faster
+            repeat: -1      // Loop the animation indefinitely
+        }); this.anims.play('coinAnim', this.coins);
 
         // give the objects arcade physics
         this.physics.world.enable(this.coins, Phaser.Physics.Arcade.STATIC_BODY);
@@ -125,7 +147,7 @@ class Platformer extends Phaser.Scene {
         this.spikeGroup.getChildren().forEach(spike => {
             const flipdX = spike.flipX;
             const flipdY = spike.flipY;
-            let wid = 18; let hei = 9; let offX = 0; let offY = 9;
+            let wid = 18; let hei = 4; let offX = 0; let offY = 14;
             if (flipdX) {
                 offX = spike.width - wid - offX;
             }
@@ -147,12 +169,14 @@ class Platformer extends Phaser.Scene {
         // Collision with objects
         this.physics.add.overlap(my.sprite.player, this.coinGroup, (obj1, obj2) => {
             obj2.destroy(); // remove coin on overlap
+            this.coinCount++;
             this.coinSound.play({
                 volume: 0.4,
             });
         }); 
         this.physics.add.overlap(my.sprite.player, this.diamondGroup, (obj1, obj2) => {
             obj2.destroy(); // remove diamond on overlap
+            this.DiamondCount++;
             this.diamondSound.play({
                 volume: 0.8,
             });
@@ -380,6 +404,12 @@ class Platformer extends Phaser.Scene {
                 my.sprite.player.body.allowGravity = true;
                 my.vfx.dash.stop();
             }
+        }
+
+        if (this.DiamondCount >= 5) {
+            coins = this.coinCount;
+            this.scene.pause();
+            this.scene.launch("winScene");
         }
     }
 }
