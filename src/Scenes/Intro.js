@@ -33,6 +33,8 @@ class Intro extends Phaser.Scene {
         this.add.text(720, 450, "Josh's Jumpy Jumble", { fontSize: '48px', color: '#ffffff' }).setOrigin(0.5);
         this.add.text(780, 480, "by Joshua Kim-Pearson", { fontSize: '18px', color: '#ffffff' }).setOrigin(0.5);
 
+        this.add.text(780, 180, "arrow keys to move, space to dash after picking up sushi roll", { fontSize: '18px', color: '#ffffff' }).setOrigin(0.5);
+
 
         this.add.text(720, 550, "Press ENTER to start!", { fontSize: '24px', color: '#ffffff' }).setOrigin(0.5);
 
