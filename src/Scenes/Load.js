@@ -20,6 +20,7 @@ class Load extends Phaser.Scene {
         this.load.audio("dash", "dash.wav")
         this.load.audio("powerUp", "powerUp.wav")
         this.load.audio("death", "explosion.wav")
+        this.load.audio("unlock", "keyOpen.wav")
 
         // Load the tilemap as a spritesheet
         this.load.spritesheet("tilemap_sheet", "tilemap_packed.png", {

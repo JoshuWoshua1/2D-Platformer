@@ -28,7 +28,7 @@ class Platformer extends Phaser.Scene {
         this.dashUnlock = true;  // false by default ONLY TRUE FOR DEBUG <---------------------------------------------**************
 
         this.jumpCount = 0;
-        this.MAX_JUMPS = 2;  // 1 by default ONLY 2 FOR DEBUG <---------------------------------------------**************
+        this.MAX_JUMPS = 200;  // 1 by default ONLY 2 FOR DEBUG <---------------------------------------------**************
     }
 
     create() {
@@ -38,7 +38,8 @@ class Platformer extends Phaser.Scene {
         this.jumpSound = this.sound.add("jump");
         this.dashSound = this.sound.add("dash");
         this.powerUpSound = this.sound.add("powerUp");
-        this.deathSound = this.sound.add("death")
+        this.deathSound = this.sound.add("death");
+        this.keySound = this.sound.add("unlock");
 
         // Create a new tilemap game object which uses 18x18 pixel tiles, and is 80 tiles wide and 80 tiles tall.
         this.map = this.add.tilemap("Level", 18, 18, 80, 80);
@@ -60,6 +61,15 @@ class Platformer extends Phaser.Scene {
         ).setOrigin(0, 0);
         this.backgroundLayer = this.map.createLayer("Background", [this.tileset, this.food_tileset, this.industrial_tileset], 0, 0);
         this.groundLayer = this.map.createLayer("Ground", [this.tileset, this.food_tileset, this.industrial_tileset], 0, 0);
+
+        // get locked tiles ready
+        this.lockedTiles = []; 
+
+        this.groundLayer.forEachTile(tile => {
+            if (tile.properties.gate) {
+                this.lockedTiles.push(tile);
+            }
+        });
 
         // collision for ground layer
         this.groundLayer.setCollisionByProperty({
@@ -92,12 +102,18 @@ class Platformer extends Phaser.Scene {
             key: "tilemap_sheet",
             frame: 68
         });
+        this.key = this.map.createFromObjects("Objects", {
+            name: "key",
+            key: "tilemap_sheet",
+            frame: 27
+        });
 
         // give the objects arcade physics
         this.physics.world.enable(this.coins, Phaser.Physics.Arcade.STATIC_BODY);
         this.physics.world.enable(this.diamonds, Phaser.Physics.Arcade.STATIC_BODY);
         this.physics.world.enable(this.dashRoll, Phaser.Physics.Arcade.STATIC_BODY);
         this.physics.world.enable(this.jumpSushi, Phaser.Physics.Arcade.STATIC_BODY);
+        this.physics.world.enable(this.key, Phaser.Physics.Arcade.STATIC_BODY);
         this.physics.world.enable(this.spikes, Phaser.Physics.Arcade.STATIC_BODY);
 
         // Collision groups for multiple objects (like coins & diamonds)
@@ -154,6 +170,15 @@ class Platformer extends Phaser.Scene {
             this.powerUpSound.play({
                 volume: 0.6,
             });
+        }); 
+        this.physics.add.overlap(my.sprite.player, this.key, (obj1, obj2) => {
+            this.keySound.play({
+                volume: 0.8,
+            });
+            obj2.destroy(); // remove key on overlap
+            this.lockedTiles.forEach(tile => {
+                this.groundLayer.removeTileAt(tile.x, tile.y);
+            }); //unlock gate at the bottom
         }); 
         this.physics.add.overlap(my.sprite.player, this.spikeGroup, (obj1, obj2) => {
             // ADD SCREEN TEXT AND MORE TO SAY "YOU DIED"
