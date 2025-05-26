@@ -25,10 +25,10 @@ class Platformer extends Phaser.Scene {
         this.isDashing = false;
         this.dashTimer = 0;
         this.lastDash = 0;
-        this.dashUnlock = true;  // false by default ONLY TRUE FOR DEBUG <---------------------------------------------**************
+        this.dashUnlock = false;  // false by default ONLY TRUE FOR DEBUG <---------------------------------------------**************
 
         this.jumpCount = 0;
-        this.MAX_JUMPS = 200;  // 1 by default ONLY 2 FOR DEBUG <---------------------------------------------**************
+        this.MAX_JUMPS = 1;  // 1 by default ONLY 2 FOR DEBUG <---------------------------------------------**************
 
         this.DiamondCount = 0; // need all of them to win
 
